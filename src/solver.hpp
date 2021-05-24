@@ -1,27 +1,24 @@
+#pragma once
 #include <vector>
 
 #include "utils.hpp"
 
-class PointSet{
-private:
-    std::vector<Point> points;
-public:
-    PointSet();
-    PointSet(const PointSet &);
-    void clear();
-    void add(Point &);
-};
-
 class AnnulusSolver{
 private:
-    PointSet ps;
+    std::vector<Point> p;
 public:
-    AnnulusSolver();
-    
+    AnnulusSolver(std::vector<Point> p);
+    virtual Annulus solve() = 0;
 };
 
-class SquareAnnulusSolver{
+class SquareAnnulusSolver: AnnulusSolver{
+public:
+    SquareAnnulusSolver(std::vector<Point> p):AnnulusSolver(p){}
+    Annulus solve();
 };
 
-class RectAnnulusSolver{
+class RectAnnulusSolver: AnnulusSolver{
+public:
+    RectAnnulusSolver(std::vector<Point> p):AnnulusSolver(p){}
+    Annulus solve();
 };

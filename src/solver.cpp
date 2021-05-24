@@ -6,5 +6,16 @@
 #include <iostream>
 
 #include "utils.hpp"
+#include "solver.hpp"
 
-using namespace std;
+AnnulusSolver::AnnulusSolver(std::vector<Point> p){
+    this->p = p;
+}
+
+Annulus SquareAnnulusSolver::solve(){
+    printf("Square Solver\n");
+}
+
+Annulus RectAnnulusSolver::solve(){
+    printf("Rect Solver\n");
+}

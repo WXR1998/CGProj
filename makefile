@@ -3,6 +3,7 @@ prom = annulus
 deps = $(shell find ./src -name "*.hpp")
 src = $(shell find ./src -name "*.cpp")
 objdir = ./bin/
+$(shell mkdir $(objdir))
 obj = $(src:%.cpp=%.o) 
 
 $(prom): $(obj)
@@ -10,7 +11,7 @@ $(prom): $(obj)
 	./bin/$(prom)
 
 %.o: %.cpp $(deps)
-	$(gpp) -c $< -o $(addprefix $(objdir), $(notdir $@)) -O2
+	$(gpp) -c $< -o $(addprefix $(objdir), $(notdir $@)) -O2 -w
 
 clean:
-	rm -rf $(objdir)/*
+	rm -rf $(objdir)*
