@@ -1,9 +1,11 @@
 #pragma once
+#include <cstdlib>
 /*
 单独处理退化的特殊情况，在实际处理一般情况时，不会使用到无穷点。
 */
 const int inf = 0x7fffffff;
 const int ninf = 0x80000000;
+const int mod = 100000 * 2;
 
 struct Point{
     int x, y;
@@ -11,14 +13,18 @@ struct Point{
     Point(int, int);
     void read();
     void print();
+    void rotate(int t=1);
     bool operator < (const Point &p) const;
 };
+bool sortPointsByX(const Point &a, const Point &b);
+bool sortPointsByY(const Point &a, const Point &b);
 
 struct Rect{
     int x1, y1, x2, y2;                                 // (x1, y1)是矩形左下角的点，(x2, y2)是矩形右上角的点
     Rect();
     Rect(int x1, int y1, int x2, int y2);
     void print();
+    void rotate(int t=1);
     bool contains(Rect r);
 };
 
@@ -37,8 +43,14 @@ struct Annulus{
     Point a, b;
     SolutionType type;
     Annulus();
+    bool operator <(const Annulus &a) const;
+    int width() const;
     void setType(SolutionType type);
     void setRects(Rect inner, Rect outer);
     void setPoints(Point a, Point b);
     void print();
+    void rotate(int t=1);
 };
+
+int randInt();
+Point randPoint();
