@@ -17,6 +17,8 @@ public:
 };
 
 class SquareAnnulusSolver: AnnulusSolver{
+protected:
+    Annulus maxWidthSquareAnnulus();
 public:
     SquareAnnulusSolver(std::vector<Point> p):AnnulusSolver(p){}
     Annulus solve();

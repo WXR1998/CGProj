@@ -133,10 +133,27 @@ Annulus AnnulusSolver::maxWidthOfSpecialConditions(){
     return ans;
 }
 
+Annulus SquareAnnulusSolver::maxWidthSquareAnnulus(){
+    /*
+     确定一个上边界上的点，确定一个下边界上的点，然后这个正方形的中心一定在这两个点y坐标的均值的这条线上
+     f_i(x): 当中心的坐标为(x, (y1+y2)/2)时，i号点的存在使得这个空环的宽
+     */
+}
 Annulus SquareAnnulusSolver::solve(){
     Annulus ans, tmp;
     ans = std::max(ans, this->maxWidthOfSpecialConditions());
 
+    tmp = this->maxWidthSquareAnnulus();
+    tmp.setType(SolutionType::NORMAL);
+    ans = std::max(ans, tmp);
+
+    for (int i = 3; i > 0; --i){
+        this->rotate();
+        tmp = this->maxWidthSquareAnnulus();
+        tmp.rotate(i);
+        tmp.setType(SolutionType::NORMAL);
+        ans = std::max(ans, tmp);
+    }
     return ans;
 }
 
