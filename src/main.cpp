@@ -17,8 +17,8 @@ int main(){
     }
     SquareAnnulusSolver sas(p);
     Annulus square_ans = sas.solve();
-    RectAnnulusSolver ras(p);
-    Annulus rect_ans = ras.solve();
+    // RectAnnulusSolver ras(p);
+    // Annulus rect_ans = ras.solve();
 
     square_ans.print();
     // rect_ans.print();

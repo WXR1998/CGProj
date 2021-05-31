@@ -3,7 +3,7 @@ import numpy as np
 
 in_path = './data/1.in'
 out_path = './data/1.out'
-coor_range = 120000
+coor_range = 20000
 alpha = 0.3
 
 if __name__ == '__main__':
@@ -17,9 +17,25 @@ if __name__ == '__main__':
     plt.scatter(p[:, 0], p[:, 1], s=3, alpha=0.6)
 
     with open(out_path, 'r') as fin:
-        type, width = fin.readline().strip().split()
+        try:
+            type, width = fin.readline().strip().split()
+        except:
+            print('[Error] In reading input file.')
+            exit(0)
         if type == 'NORMAL':
-            pass
+            inner = fin.readline().strip()
+            outer = fin.readline().strip()
+            inner = [_[1:-1].split(', ') for _ in inner[inner.find(' ')+1:].split(' - ')]
+            inner = [[int(_[0]), int(_[1])] for _ in inner]
+            outer = [_[1:-1].split(', ') for _ in outer[outer.find(' ')+1:].split(' - ')]
+            outer = [[int(_[0]), int(_[1])] for _ in outer]
+            plt.plot(   [inner[0][0], inner[1][0], inner[1][0], inner[0][0], inner[0][0]], 
+                        [inner[0][1], inner[0][1], inner[1][1], inner[1][1], inner[0][1]], 
+                        c='red', alpha=alpha)
+            plt.plot(   [outer[0][0], outer[1][0], outer[1][0], outer[0][0], outer[0][0]], 
+                        [outer[0][1], outer[0][1], outer[1][1], outer[1][1], outer[0][1]], 
+                        c='green', alpha=alpha)
+            
         elif type == 'STRIPE_HORIZONTAL':
             y1 = int(fin.readline())
             y2 = int(fin.readline())
@@ -47,7 +63,7 @@ if __name__ == '__main__':
                 plt.plot([-coor_range, ay], [by, by], c='red', alpha=alpha)
 
         else:
-            print(type)
+            pass
 
     plt.title(f'Distribution of the points in [{in_path}]\nwidth = {width}')
     plt.tight_layout()

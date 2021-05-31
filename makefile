@@ -11,7 +11,7 @@ $(prom): $(obj)
 	$(gpp) -o $(objdir)$(prom) $(addprefix $(objdir), $(notdir $(obj))) $(setting)
 	@echo ""
 	@bin/$(prom)
-	@python3 ./src/draw.py
+	python3 ./src/draw.py
 
 %.o: %.cpp $(deps)
 	$(gpp) -c $< -o $(addprefix $(objdir), $(notdir $@)) $(setting)
