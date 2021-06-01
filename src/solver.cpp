@@ -203,10 +203,10 @@ Annulus SquareAnnulusSolver::maxWidthSquareAnnulus(){
             int len_asc = p_asc.size() - 1, 
                 len_des = p_des.size() - 1, 
                 len_hor = p_hor.size() - 1;
-            while (cur_asc < len_asc || cur_des < len_des || cur_hor < len_hor){
-                Point asc = cur_asc < len_asc ? p_asc[cur_asc] : Point(inf, inf);
-                Point des = cur_des < len_des ? p_des[cur_des] : Point(inf, inf);
-                Point hor = cur_hor < len_hor ? p_hor[cur_hor] : Point(inf, inf);
+            while (cur_asc+1 < len_asc || cur_des+1 < len_des || cur_hor+1 < len_hor){
+                Point asc = cur_asc+1 < len_asc ? p_asc[cur_asc+1] : Point(inf, inf);
+                Point des = cur_des+1 < len_des ? p_des[cur_des+1] : Point(inf, inf);
+                Point hor = cur_hor+1 < len_hor ? p_hor[cur_hor+1] : Point(inf, inf);
                 std::pair <bool, Point> res1, res2;
                 if (asc <= des && asc <= hor){
                     res1 = intersection(p_asc[cur_asc], p_asc[cur_asc+1], p_des[cur_des], p_des[cur_des+1]);
@@ -274,19 +274,19 @@ Annulus SquareAnnulusSolver::maxWidthSquareAnnulus(){
 }
 Annulus SquareAnnulusSolver::solve(){
     Annulus ans, tmp;
-    // ans = std::max(ans, this->maxWidthOfSpecialConditions());
+    ans = std::max(ans, this->maxWidthOfSpecialConditions());
 
     tmp = this->maxWidthSquareAnnulus();
     tmp.setType(SolutionType::NORMAL);
     ans = std::max(ans, tmp);
 
-    for (int i = 3; i > 0; --i){
-        this->rotate();
-        tmp = this->maxWidthSquareAnnulus();
-        tmp.rotate(i);
-        tmp.setType(SolutionType::NORMAL);
-        ans = std::max(ans, tmp);
-    }
+    this->rotate();
+    tmp = this->maxWidthSquareAnnulus();
+    tmp.rotate(3);
+    tmp.setType(SolutionType::NORMAL);
+    ans = std::max(ans, tmp);
+
+    this->rotate(3);
     return ans;
 }
 

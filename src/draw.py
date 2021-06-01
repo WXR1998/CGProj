@@ -63,7 +63,18 @@ if __name__ == '__main__':
                 plt.plot([-coor_range, ay], [by, by], c='red', alpha=alpha)
 
         else:
-            pass
+            asc = [_.split(', ') for _ in fin.readline().strip().split(') (')[1:-1]]
+            asc = np.array([[int(_[0]), int(_[1])] for _ in asc])
+            des = [_.split(', ') for _ in fin.readline().strip().split(') (')[1:-1]]
+            des = np.array([[int(_[0]), int(_[1])] for _ in des])
+            hor = [_.split(', ') for _ in fin.readline().strip().split(') (')[1:-1]]
+            hor = np.array([[int(_[0]), int(_[1])] for _ in hor])
+            can = [_.split(', ') for _ in fin.readline().strip().split(') (')[1:-1]]
+            can = np.array([[int(_[0]), int(_[1])] for _ in can])
+            plt.plot(asc[:, 0], asc[:, 1], c='red', alpha=alpha)
+            plt.plot(des[:, 0], des[:, 1], c='green', alpha=alpha)
+            plt.plot(hor[:, 0], hor[:, 1], c='cyan', alpha=alpha)
+            plt.scatter(can[:, 0], can[:, 1], s=10, c='black', alpha=alpha)
 
     plt.title(f'Distribution of the points in [{in_path}]\nwidth = {width}')
     plt.tight_layout()

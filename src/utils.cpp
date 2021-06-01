@@ -323,7 +323,7 @@ std::pair <bool, Point> intersection(Point a1, Point a2, Point b1, Point b2){
             Point base = b2 - b1;
             long long d1 = abs(cross(base, a1 - b1));
             long long d2 = abs(cross(base, a2 - b1));
-            double t = d1 / (d1 + d2);
+            double t = (double)(d1) / (d1 + d2);
             int x = (int)(a1.x + (a2.x - a1.x) * t);
             int y = (int)(a1.y + (a2.y - a1.y) * t);
             return std::make_pair(true, Point(x, y));
