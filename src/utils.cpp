@@ -8,11 +8,11 @@
 
 
 void printCoordinate(int x){
-    if (x == inf)
-        printf("inf");
-    else if (x == -inf)
-        printf("-inf");
-    else
+    // if (x == inf)
+    //     printf("inf");
+    // else if (x == -inf)
+    //     printf("-inf");
+    // else
         printf("%d", x);
 }
 

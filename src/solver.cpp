@@ -9,6 +9,7 @@
 #include "utils.hpp"
 #include "solver.hpp"
 #include "bst.hpp"
+#include "segment_dragging.hpp"
 
 
 AnnulusSolver::AnnulusSolver(std::vector<Point> p){
@@ -127,6 +128,10 @@ Annulus AnnulusSolver::maxWidthOfSpecialConditions(){
     return ans;
 }
 
+/*
+    检测p点是否被线段(q1,q2)所允许。其中q1<=q2
+    返回pair<int, int>, 前者表示是否允许，后者表示q1q2是否是在x轴上
+*/
 std::pair <int, int> checkBelow(Point p, Point q1, Point q2){
     assert(p.x >= q1.x && p.x <= q2.x);
     if (p.x == q1.x){
@@ -143,6 +148,10 @@ std::pair <int, int> checkBelow(Point p, Point q1, Point q2){
     int y = (int)(q1.y + (q2.y - q1.y) * t);
     return std::make_pair(p.y <= y, 0);
 }
+/*
+    在当前点的旋转情况下，寻找最大宽度的正方形空环带
+    其中，正方形的顶边和底边上都至少有1个点
+*/
 Annulus SquareAnnulusSolver::maxWidthSquareAnnulus(){
     /*
      确定一个上边界上的点，确定一个下边界上的点，然后这个正方形的中心一定在这两个点y坐标的均值的这条线上
@@ -290,9 +299,86 @@ Annulus SquareAnnulusSolver::solve(){
     return ans;
 }
 
+/*
+    在当前点的旋转情况下，寻找最大宽度的矩形空环带
+    首先枚举顶边上的点，然后枚举底边的点，同时保持w的递增
+*/
+Annulus RectAnnulusSolver::maxWidthRectAnnulus(){
+    Annulus ans, tmp;
+    std::vector <Point> p_y(this->p);   // 按y排序的点集
+    sort(p_y.begin(), p_y.end(), sortPointsByY);
+    SegmentDragging sg1(p_y, Direction::D1);
+    SegmentDragging sg2(p_y, Direction::D2);
+    SegmentDragging sg3(p_y, Direction::D3);
+    SegmentDragging sg4(p_y, Direction::D4);
+
+    int n = this->p.size();
+    int w_idx, w;   // 当前最优解的点的下标
+    int nw_idx, nw;
+    Splay splay;
+    for (int b_idx = 0; b_idx < n - 1; ++b_idx){
+        Point b = p_y[b_idx];
+        w = 0; w_idx = b_idx;
+        splay.init();
+        for (int t_idx_start = b_idx + 1; t_idx_start < n; ++t_idx_start){  // 对于同一水平线上的所有点，应该先一起计算，再加入splay
+            int t_idx_end = t_idx_start;
+            while (t_idx_end+1 < n && p_y[t_idx_end+1].y == p_y[t_idx_start].y)
+                ++t_idx_end;
+            for (int t_idx = t_idx_start; t_idx <= t_idx_end; ++t_idx){
+                Point t = p_y[t_idx];
+
+                nw = w; nw_idx = w_idx;
+                int hasGreaterW;
+                // 试探w能否增大
+                do{
+                    while (nw == w && nw_idx+1 < t_idx)
+                        nw = p_y[++nw_idx].y - b.y;
+                    if (nw == w)
+                        break;
+                    hasGreaterW = false;
+                    Point bl(sg2.drag(b_idx, nw)), br(sg1.drag(b_idx, nw)), 
+                        tl(sg3.drag(t_idx, nw)), tr(sg4.drag(t_idx, nw));
+                    int xl = std::max(bl.x, tl.x), xr = std::min(br.x, tr.x);
+                    auto gap_l_res = splay.findGapInRange(nw, xl, std::min(t.x, b.x) + nw, 0);
+                    auto gap_r_res = splay.findGapInRange(nw, std::max(t.x, b.x) - nw, xr, 1);
+                    if (gap_l_res.first && gap_r_res.first){
+                        auto gap_l = gap_l_res.second;
+                        auto gap_r = gap_r_res.second;
+                        if (splay.checkPointExistenceInRange(gap_l.second, gap_r.first)){
+                            tmp.setType(SolutionType::NORMAL);
+                            tmp.setRects(Rect(gap_l.second, b.y + nw, gap_r.first, t.y - nw), 
+                                Rect(gap_l.first, b.y, gap_r.second, t.y));
+                            ans = std::max(ans, tmp);
+                            w = nw; w_idx = nw_idx;
+                            hasGreaterW = true;
+                        }
+                    }
+                }while (hasGreaterW);
+            }
+            for (int t_idx = t_idx_start; t_idx <= t_idx_end; ++t_idx)
+                splay.addPoint(p_y[t_idx].x);
+            t_idx_start = t_idx_end;
+        }
+    }
+    return ans;
+}
+
 Annulus RectAnnulusSolver::solve(){
     Annulus ans, tmp;
     ans = std::max(ans, this->maxWidthOfSpecialConditions());
+
+    tmp = this->maxWidthRectAnnulus();
+    tmp.setType(SolutionType::NORMAL);
+    ans = std::max(ans, tmp);
+
+    for (int i = 1; i <= 3; ++i){
+        this->rotate();
+        tmp = this->maxWidthRectAnnulus();
+        tmp.rotate(4 - i);
+        tmp.setType(SolutionType::NORMAL);
+        ans = std::max(ans, tmp);
+    }
+    this->rotate();
 
     return ans;
 }

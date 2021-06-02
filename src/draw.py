@@ -60,9 +60,8 @@ if __name__ == '__main__':
                 plt.plot([bx, coor_range], [by, by], c='red', alpha=alpha)
             else:
                 plt.plot([-coor_range, ax], [ay, ay], c='red', alpha=alpha)
-                plt.plot([-coor_range, ay], [by, by], c='red', alpha=alpha)
-
-        else:
+                plt.plot([-coor_range, bx], [by, by], c='red', alpha=alpha)
+        elif type == 'DEBUG':
             asc = [_.split(', ') for _ in fin.readline().strip().split(') (')[1:-1]]
             asc = np.array([[int(_[0]), int(_[1])] for _ in asc])
             des = [_.split(', ') for _ in fin.readline().strip().split(') (')[1:-1]]
@@ -75,6 +74,17 @@ if __name__ == '__main__':
             plt.plot(des[:, 0], des[:, 1], c='green', alpha=alpha)
             plt.plot(hor[:, 0], hor[:, 1], c='cyan', alpha=alpha)
             plt.scatter(can[:, 0], can[:, 1], s=10, c='black', alpha=alpha)
+        elif type == 'DEBUG2':
+            origin = np.array([int(_) for _ in fin.readline().strip()[1:-1].split(', ')])
+            r = [_.split(', ') for _ in fin.readline().strip()[1:-1].split(') (')]
+            r = np.array([[int(_[0]), int(_[1])] for _ in r])
+            ans = np.array([int(_) for _ in fin.readline().strip()[1:-1].split(', ')])
+
+            plt.axhline(origin[1], c='red', alpha=alpha)
+            plt.axvline(origin[0], c='red', alpha=alpha)
+            plt.scatter(origin[0], origin[1], s=10, c='red', alpha=alpha)
+            plt.scatter(r[:, 0], r[:, 1], s=10, c='red', alpha=alpha)
+            plt.scatter(ans[0], ans[1], s=20, c='green', alpha=alpha)
 
     plt.title(f'Distribution of the points in [{in_path}]\nwidth = {width}')
     plt.tight_layout()

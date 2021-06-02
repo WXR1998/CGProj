@@ -1,8 +1,10 @@
 #include <vector>
 #include <cstdio>
+#include <algorithm>
 
 #include "utils.hpp"
 #include "solver.hpp"
+#include "segment_dragging.hpp"
 
 int main(){
     std::vector <Point> p;
@@ -15,13 +17,13 @@ int main(){
         tmp.read();
         p.push_back(tmp);
     }
-    SquareAnnulusSolver sas(p);
-    Annulus square_ans = sas.solve();
-    // RectAnnulusSolver ras(p);
-    // Annulus rect_ans = ras.solve();
+    // SquareAnnulusSolver sas(p);
+    // Annulus square_ans = sas.solve();
+    RectAnnulusSolver ras(p);
+    Annulus rect_ans = ras.solve();
 
-    square_ans.print();
-    // rect_ans.print();
+    // square_ans.print();
+    rect_ans.print();
 
     return 0;
 }

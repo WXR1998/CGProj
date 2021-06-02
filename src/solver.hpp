@@ -5,26 +5,28 @@
 
 class AnnulusSolver{
 protected:
-    std::vector<Point> p;
+    std::vector <Point> p;
     Annulus maxWidthXInterval();
     Annulus maxWidthLShape();
     Annulus maxWidthOfSpecialConditions();
 public:
-    AnnulusSolver(std::vector<Point> p);
+    AnnulusSolver(std::vector <Point> p);
     virtual Annulus solve() = 0;
     // 将点集中所有点旋转角度
     void rotate(int t=1);
 };
 
 class SquareAnnulusSolver: AnnulusSolver{
-protected:
+private:
     Annulus maxWidthSquareAnnulus();
 public:
-    SquareAnnulusSolver(std::vector<Point> p):AnnulusSolver(p){}
+    SquareAnnulusSolver(std::vector <Point> p):AnnulusSolver(p){}
     Annulus solve();
 };
 
 class RectAnnulusSolver: AnnulusSolver{
+private:
+    Annulus maxWidthRectAnnulus();
 public:
     RectAnnulusSolver(std::vector<Point> p):AnnulusSolver(p){}
     Annulus solve();
