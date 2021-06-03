@@ -23,6 +23,15 @@ class SplayNode{
 private:
 public:
 };
+
+/*
+    Splay需要实现这样的操作：
+        - 插入一个点
+        - 查询某个区间中，大于等于w的最大gap，解需要尽量靠左或者靠右
+    这就需要每个节点维护它子树的 最小值、最大值、该区间中最大的gap
+        - 合并两棵子树时，该区间的最大gap即为 两棵子树的gap 和 右子树min-左子树max
+        - 查询时，首先把区间[l,r]提取出来，然后依据顺序，看 l到区间最小值、区间最大值到r、区间中的大于等于w的第一个gap
+*/
 class Splay{
 private:
     SplayNode *root;
