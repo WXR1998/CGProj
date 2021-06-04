@@ -21,7 +21,22 @@ public:
 
 class SplayNode{
 private:
+    int value;
+    int max, min, gap;
 public:
+    SplayNode *lc, *rc, *fa;
+
+    SplayNode(int value, SplayNode *fa=NULL):value(value), fa(fa){
+        max = min = value;
+        gap = 0;
+        lc = rc = NULL;
+    }
+    void update();
+    int getMax();
+    int getMin();
+    int getMaxGap();
+    int getValue();
+    void print();
 };
 
 /*
@@ -36,6 +51,40 @@ class Splay{
 private:
     SplayNode *root;
     std::set <int> p;
+
+    std::pair <bool, std::pair<int, int> > findGapInSubtree(SplayNode *n, int w, int d);
+    std::pair <bool, std::pair<int, int> > _findGapInRange_bruteforce(int w, int l, int r, int d);
+    std::pair <bool, std::pair<int, int> > _findGapInRange_splay(int w, int l, int r, int d);
+    bool _checkPointExistenceInRange_bruteforce(int l, int r);
+    bool _checkPointExistenceInRange_splay(int l, int r);
+    void _addPoint_bruteforce(int v);
+    void _addPoint_splay(int v);
+
+    void splayDelete(SplayNode *n);
+    /*
+        将节点n旋转到树根，其中如果toRoot为真，则转到树根，否则转到树根的孩子
+    */
+    void rotate(SplayNode *n, bool toRoot=true);
+    void rotateOnce(SplayNode *n);
+    /*
+        找到大于等于value的第一个节点
+        注意value一定要在[-inf, inf]内，否则可能会Runtime Error
+    */
+    SplayNode* upperBound(SplayNode *n, int value);
+    /*
+        找到等于value的那个节点
+    */
+    SplayNode* find(int value);
+    void insert(SplayNode *n, int value);
+    bool insert(int value);
+    /*
+        中序遍历中的前一个节点
+    */
+    SplayNode* pred(SplayNode *n);
+    /*
+        获得代表区间[l,r]的子树
+    */
+    SplayNode* getInterval(int l, int r);
 public:
     Splay();
     /*
@@ -49,4 +98,5 @@ public:
     bool checkPointExistenceInRange(int l, int r);
     void addPoint(int v);
     void init();
+    void print();
 };

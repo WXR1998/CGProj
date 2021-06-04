@@ -1,14 +1,17 @@
 #include <vector>
 #include <cstdio>
 #include <algorithm>
+#include <ctime>
 
 #include "utils.hpp"
 #include "solver.hpp"
+#include "bst.hpp"
 #include "segment_dragging.hpp"
 
 int main(){
     std::vector <Point> p;
     int n;
+    int st = clock();
     freopen("data/1.in", "r", stdin);
     freopen("data/1.out", "w", stdout);
     scanf("%d", &n);
@@ -24,6 +27,10 @@ int main(){
 
     // square_ans.print();
     rect_ans.print();
+    // Splay splay;
+    // splay.debug();
+    int ed = clock();
+    printf("Time used = %.3f s\n", (double)(ed - st) / CLOCKS_PER_SEC);
 
     return 0;
 }
