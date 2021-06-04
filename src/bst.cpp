@@ -259,8 +259,8 @@ std::pair <bool, std::pair<int, int> > Splay::_findGapInRange_splay(int w, int l
         ans = findGapInSubtree(interval, w, d);
         if (r - interval->getMax() >= w){
             ans.first = true;
-            ans.second.first = r - w;
-            ans.second.second = r;
+            ans.second.first = interval->getMax();
+            ans.second.second = interval->getMax() + w;
             return ans;
         }
     }else{
@@ -273,8 +273,8 @@ std::pair <bool, std::pair<int, int> > Splay::_findGapInRange_splay(int w, int l
         ans = findGapInSubtree(interval, w, d);
         if (interval->getMin() - l >= w){
             ans.first = true;
-            ans.second.first = l;
-            ans.second.second = l + w;
+            ans.second.first = interval->getMin() - w;
+            ans.second.second = interval->getMin();
             return ans;
         }
     }
