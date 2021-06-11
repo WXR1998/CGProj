@@ -1,36 +1,13 @@
 #include <set>
 #include <vector>
 #include <iostream>
+#include <cassert>
 
 #include "bst.hpp"
 #include "utils.hpp"
 
 using std::cout;
 using std::endl;
-
-Bst::Bst(){
-    this->clear();
-}
-void Bst::clear(){
-    this->count = 0;
-    this->T.clear();
-}
-void Bst::insert(int v){
-    this->T.insert(std::make_pair(v, this->count++));
-}
-int Bst::greaterOrEqual(int v){
-    auto ans = this->T.lower_bound(std::make_pair(v, -1));
-    if (ans == T.end())
-        return inf;
-    return ans->first;
-}
-int Bst::lessOrEqual(int v){
-    auto ans = this->T.lower_bound(std::make_pair(v, this->count+1));
-    ans--;
-    if (ans == T.rend())
-        return -inf;
-    return ans->first;
-}
 
 void SplayNode::update(){
     max = min = value;
@@ -382,4 +359,12 @@ void Splay::init(){
     root = new SplayNode(-inf);
     root->rc = new SplayNode(inf, root);
     root->update();
+}
+int Splay::upperBound(int v){
+    if (v > inf)
+        v = inf;
+    if (v < -inf)
+        v = -inf;
+    SplayNode* res = upperBound(root, v);
+    return res->getValue();
 }

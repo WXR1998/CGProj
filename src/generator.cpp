@@ -11,7 +11,7 @@ int main(int argc, char **argv){
 
     freopen("./data/1.in", "w", stdout);
 
-    int n = 5000;
+    int n = 50;
     printf("%d\n", n);
     for (int i = 0; i < n; ++i){
         Point p = randPoint();

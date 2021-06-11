@@ -33,7 +33,7 @@ Annulus AnnulusSolver::maxWidthXInterval(){
 }
 Annulus AnnulusSolver::maxWidthLShape(){
     Annulus annulus, tmp;
-    Bst bst;
+    Splay splay;
     std::vector <int> vx, vy;
     // 给定坐标，求该坐标上的点在p中的下标
     std::map <std::pair<int, int>, int> idx;
@@ -53,23 +53,22 @@ Annulus AnnulusSolver::maxWidthLShape(){
         ans[i] = new int[ly];
 
     // 从上往下，从左往右放入所有点，同时找x坐标恰好大于这个点的点
-    bst.clear();
+    splay.init();
     for (int j = ly - 1; j >= 0; --j)
         for (int i = 0; i < lx; ++i){
             int x = vx[i], y = vy[j];
-            int greater_x = bst.greaterOrEqual(x + 1);
+            int greater_x = splay.upperBound(x + 1);
             ans[i][j] = greater_x;
             std::pair<int, int> target = std::make_pair(x, y);
-            if (idx.find(target) != idx.end()){
-                bst.insert(x);
-            }
+            if (idx.find(target) != idx.end())
+                splay.addPoint(x);
         }
     // 从右往左，从下往上放入所有点，同时找y坐标恰好大于这个点的点
-    bst.clear();
+    splay.init();
     for (int i = lx - 1; i >= 0; --i)
         for (int j = 0; j < ly; ++j){
             int x = vx[i], y = vy[j];
-            int greater_y = bst.greaterOrEqual(y + 1);
+            int greater_y = splay.upperBound(y + 1);
             int greater_x = ans[i][j];
             assert((greater_y == inf) == (greater_x == inf));
             if (greater_y != inf && greater_x != inf){
@@ -80,7 +79,7 @@ Annulus AnnulusSolver::maxWidthLShape(){
             }
             std::pair<int, int> target = std::make_pair(x, y);
             if (idx.find(target) != idx.end())
-                bst.insert(y);
+                splay.addPoint(y);
         }
 
     for (int i = 0; i < lx; ++i)

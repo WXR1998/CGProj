@@ -1,23 +1,5 @@
 #pragma once
-#include <ext/pb_ds/tree_policy.hpp>
-#include <ext/pb_ds/assoc_container.hpp>
 #include <set>
-
-class Bst{
-private:
-    __gnu_pbds::tree<std::pair<int, int>, 
-        __gnu_pbds::null_type, 
-        std::less<std::pair<int, int> >, 
-        __gnu_pbds::rb_tree_tag, 
-        __gnu_pbds::tree_order_statistics_node_update> T;
-    int count;
-public:
-    Bst();
-    void clear();
-    void insert(int v);
-    int greaterOrEqual(int v);
-    int lessOrEqual(int v);
-};
 
 class SplayNode{
 private:
@@ -96,6 +78,7 @@ public:
         检查是否有点在[l,r]之间，点落在l或r上也可以。
     */
     bool checkPointExistenceInRange(int l, int r);
+    int upperBound(int v);
     void addPoint(int v);
     void init();
     void print();
