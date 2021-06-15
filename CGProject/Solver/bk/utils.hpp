@@ -39,10 +39,14 @@ struct Rect{
     bool contains(Rect r);
 };
 
-enum SolutionType{
-    NORMAL=0,                                           // 一般情况
-    STRIPE_HORIZONTAL, STRIPE_VERTICAL,                 // 水平或垂直长条
-    L_SHAPED_1, L_SHAPED_2, L_SHAPED_3, L_SHAPED_4      // 四个象限的L形区域
+//enum SolutionType{
+//    NORMAL=0,                                           // 一般情况
+//    STRIPE_HORIZONTAL, STRIPE_VERTICAL,                 // 水平或垂直长条
+//    L_SHAPED_1, L_SHAPED_2, L_SHAPED_3, L_SHAPED_4      // 四个象限的L形区域
+//};
+
+enum SolutionType {
+	NORMAL = 0, STRIPE_HORIZONTAL, STRIPE_VERTICAL, L_SHAPED_1, L_SHAPED_2, L_SHAPED_3, L_SHAPED_4
 };
 
 struct Annulus{

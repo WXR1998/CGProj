@@ -101,29 +101,29 @@ Annulus AnnulusSolver::maxWidthOfSpecialConditions(){
     ans = std::max(ans, tmp);
     this->rotate(3);
 
-    tmp = this->maxWidthLShape();
-    tmp.setType(SolutionType::L_SHAPED_1);
-    ans = std::max(ans, tmp);
+    //tmp = this->maxWidthLShape();
+    //tmp.setType(SolutionType::L_SHAPED_1);
+    //ans = std::max(ans, tmp);
 
-    this->rotate();
-    tmp = this->maxWidthLShape();
-    tmp.rotate(3);
-    tmp.setType(SolutionType::L_SHAPED_2);
-    ans = std::max(ans, tmp);
+    //this->rotate();
+    //tmp = this->maxWidthLShape();
+    //tmp.rotate(3);
+    //tmp.setType(SolutionType::L_SHAPED_2);
+    //ans = std::max(ans, tmp);
 
-    this->rotate();
-    tmp = this->maxWidthLShape();
-    tmp.rotate(2);
-    tmp.setType(SolutionType::L_SHAPED_3);
-    ans = std::max(ans, tmp);
+    //this->rotate();
+    //tmp = this->maxWidthLShape();
+    //tmp.rotate(2);
+    //tmp.setType(SolutionType::L_SHAPED_3);
+    //ans = std::max(ans, tmp);
 
-    this->rotate();
-    tmp = this->maxWidthLShape();
-    tmp.rotate(1);
-    tmp.setType(SolutionType::L_SHAPED_4);
-    ans = std::max(ans, tmp);
+    //this->rotate();
+    //tmp = this->maxWidthLShape();
+    //tmp.rotate(1);
+    //tmp.setType(SolutionType::L_SHAPED_4);
+    //ans = std::max(ans, tmp);
 
-    this->rotate();
+    //this->rotate();
     return ans;
 }
 
@@ -197,8 +197,6 @@ Annulus SquareAnnulusSolver::maxWidthSquareAnnulus(){
             contour_des.reverseX();
             contour_hor.finish();
 
-            // 至此，三条轮廓线已经计算完毕
-            // 接下来需要计算轮廓线两两之间的交点
             std::vector <Point> &p_asc = contour_asc.getPoints();
             std::vector <Point> &p_des = contour_des.getPoints();
             std::vector <Point> &p_hor = contour_hor.getPoints();
