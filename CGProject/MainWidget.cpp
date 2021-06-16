@@ -68,11 +68,17 @@ void MainWidget::ClearPoints()
 
 void MainWidget::SolveAndOutput()
 {
+	//printf("pts size before removing duplicated elements: %zd\n", this->pts.size());
+	// remove duplicated points
+	RemoveDuplicatedPoints(this->pts, this->pts);
+	//printf("pts size after removing duplicated elements: %zd\n", this->pts.size());
+
 	// solve 
 	printf("print points:\n");
 	for (auto p : pts)
 	{
 		p.print();
+		printf("\n");
 	}
 	// using solver (with bug on Win 10)
 	//RectAnnulusSolver solver = RectAnnulusSolver(pts);

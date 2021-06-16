@@ -128,3 +128,6 @@ Point randPoint();
     求线段a1a2和b1b2的交点，如果有交点，则返回 <true, 交点>，否则 <false, 零点>
 */
 std::pair <bool, Point> intersection(Point a1, Point a2, Point b1, Point b2);
+
+// remove duplicated 2D points
+void RemoveDuplicatedPoints(std::vector<Point> &_input, std::vector<Point> &_output);

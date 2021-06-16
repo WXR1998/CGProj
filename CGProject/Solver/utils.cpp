@@ -330,3 +330,11 @@ std::pair <bool, Point> intersection(Point a1, Point a2, Point b1, Point b2){
         }
     return std::make_pair(false, Point());
 }
+
+void RemoveDuplicatedPoints(std::vector<Point>& _input, std::vector<Point>& _output)
+{
+	std::sort(_input.begin(), _input.end(), std::less<Point>());
+	int n = std::unique(_input.begin(), _input.end()) - _input.begin();
+	_output.resize(n);
+	memcpy(_output.data(), _input.data(), sizeof(Point)*n);
+}
